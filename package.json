@@ -1,0 +1,30 @@
+{
+  "author": {
+    "name": "Takeshi Toya"
+  },
+  "bugs": {
+    "url": "https://github.com/toyata/modal/issues"
+  },
+  "dependencies": {
+    
+  },
+  "description": "JavaScript modal plugin",
+  "devDependencies": {
+    
+  },
+  "homepage": "https://github.com/toyata/modal",
+  "keywords": [
+    "modal"
+  ],
+  "license": "MIT",
+  "main": "modal.js",
+  "name": "modal",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toyata/modal.git"
+  },
+  "scripts": {
+    
+  },
+  "version": "0.1.0"
+}
