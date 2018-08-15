@@ -18,7 +18,7 @@
   ],
   "license": "MIT",
   "main": "modal.js",
-  "name": "modal",
+  "name": "tt.modal",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/toyata/modal.git"
