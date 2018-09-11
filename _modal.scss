@@ -1,0 +1,48 @@
+.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  overflow: hidden;
+  z-index: 1001;
+  outline: 0;
+}
+
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.modal.fade {
+  opacity: 0;
+  transition-duration: .5s;
+}
+
+.modal.fade.show {
+  opacity: 1;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: #000;
+}
+
+.modal-backdrop.fade {
+  opacity: 0;
+  transition: opacity .15s linear;
+}
+
+.modal-backdrop.show {
+  opacity: .95;  
+}
