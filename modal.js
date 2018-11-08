@@ -57,7 +57,21 @@ const Modal = (() => {
     }
 
     hide(e=null) {
-      Array.from(this.el.querySelectorAll('[data-dismiss="modal"]')).forEach(el => this._off('click', el))
+      let result = !e || e && e.target === this.el
+
+      Array.from(this.el.querySelectorAll('[data-dismiss="modal"]')).forEach(el => {
+        this._off('click', el)
+
+        if (e && (e.target === el || el.contains(e.target)))
+          result = true
+      })
+
+      if (!result || !this.el.classList.contains('show')) {
+        let rejected = Promise.reject()
+        rejected.catch(()=>{})
+
+        return rejected
+      }
 
       e && e.target && (e.target.tagName === 'A' || e.target.tagName === 'AREA') && e.preventDefault() 
 
@@ -114,6 +128,7 @@ const Modal = (() => {
           this._on('click', el, this._hide)
         })
 
+        this._on('click', this.el, this._hide)
         this._off('transitionend', this.el)
 
         if (this.el.classList.contains('fade')) {
@@ -220,6 +235,7 @@ const Modal = (() => {
     clear() {
       Array.from(this.el.querySelectorAll('[data-dismiss="modal"]')).forEach(el => el.removeEventListener('click', this._hide))
 
+      this._off('click', this.el)
       this._off('transitionend', this.el)
       this._off('transitionend', this._backdrop)
 
@@ -299,7 +315,4 @@ const Modal = (() => {
   return Modal
 })()
 
-// Export it for webpack
-if (typeof module === 'object' && module.exports) {
-  module.exports = { Modal: Modal };
-}
+export default Modal 

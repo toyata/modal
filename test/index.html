@@ -9,7 +9,6 @@
   <script type="text/javascript" src="jasmine/lib/jasmine-3.2.0/jasmine.js"></script>
   <script type="text/javascript" src="jasmine/lib/jasmine-3.2.0/jasmine-html.js"></script>
   <script type="text/javascript" src="jasmine/lib/jasmine-3.2.0/boot.js"></script>
-  <script type="text/javascript" src="../modal.js"></script>
 </head>
 <body>
   <div data-toggle="modal"></div>
@@ -20,13 +19,16 @@
   <a href="external.html#modal-content" data-toggle="modal" data-target="modal-test-3">SHOW</a>
   
   <div class="modal" id="modal-test">
-    TEST
-    <a href="#dismiss" data-dismiss="modal">DISMISS</a>
-    <span data-dismiss="modal">DISMISS2</span>
+    <div class="modal-content">
+      TEST
+      <a href="#dismiss" data-dismiss="modal">DISMISS</a>
+      <span data-dismiss="modal">DISMISS2</span>
+    </div>
   </div>
   
   <div class="modal fade" id="modal-test-2">
-    TEST
+    <div class="modal-content">TEST</div>
+    
     <a href="#dismiss" data-dismiss="modal">DISMISS</a>
     <span data-dismiss="modal">DISMISS2</span>
   </div>
@@ -35,6 +37,7 @@
     <div class="modal-content"></div>
   </div>
     
-  <script type="text/javascript" src="ModalSpec.js"></script>
+  <script type="module" src="../modal.js"></script>
+  <script type="module" src="ModalSpec.js"></script>
 </body>
 </html>

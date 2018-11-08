@@ -1,3 +1,5 @@
+import Modal from "../modal.js";
+
 describe('Modal', function() {
   // Events
   let _click = document.createEvent('Event')
@@ -151,6 +153,47 @@ describe('Modal', function() {
     })
   })
 
+  describe('Click Handler', function() {
+    afterEach(function() {
+      Modal.dispose()
+    })
+
+    it('Hide modal when click out of content area', function(done) {
+      modals[0].addEventListener('shown', ()=> {
+        modals[0].addEventListener('hidden', ()=> {
+          expect(modals[0].classList.contains('show')).toBeFalsy()
+          done()
+        }, {once: true})
+
+        modals[0].dispatchEvent(events.click)
+      }, {once: true})
+
+      triggers[2].dispatchEvent(events.click)
+    })
+
+    it('Dont hide modal when click inside of content area', function(done) {
+      modals[0].addEventListener('shown', ()=> {
+        let modal = Modal.instance(modals[0])
+        let watcher = {
+          hide: function () {}
+        }
+
+        spyOn(watcher, 'hide')
+
+        modal.el.addEventListener('hide', watcher.hide)
+        modal.el.querySelector('.modal-content').dispatchEvent(events.click)
+
+        expect(watcher.hide).not.toHaveBeenCalled()
+
+        done()
+      }, {once: true})
+
+      triggers[2].dispatchEvent(events.click)
+
+    })
+  })
+
+
   describe('Hide', function() {
     afterEach(function() {
       Modal.dispose()
@@ -240,7 +283,7 @@ describe('Modal', function() {
         expect(window.getComputedStyle(modal._backdrop).opacity).toBeGreaterThan(.94)
         expect(window.getComputedStyle(el).opacity).toBe('1')
 
-        Modal.instance(el).hide()
+        modal.hide()
 
         setTimeout(() => {
           expect(window.getComputedStyle(modal._backdrop).opacity).not.toBe('0')
@@ -258,7 +301,7 @@ describe('Modal', function() {
     it('Has modal-content block', function(done) {
       triggers[5].dispatchEvent(events.click)
 
-      modal = Modal.instances[0]
+      let modal = Modal.instances[0]
 
       modal.el.addEventListener('shown', () => {
         expect(modal.el.querySelector('.modal-content').childNodes.length).not.toBe(0)

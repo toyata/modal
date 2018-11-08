@@ -5,12 +5,10 @@
   "bugs": {
     "url": "https://github.com/toyata/modal/issues"
   },
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "description": "JavaScript modal plugin",
   "devDependencies": {
-    
+    "browser-sync": "^2.26.3"
   },
   "homepage": "https://github.com/toyata/modal",
   "keywords": [
@@ -24,7 +22,7 @@
     "url": "git+https://github.com/toyata/modal.git"
   },
   "scripts": {
-    
+    "serve": "browser-sync start --config 'bs-config.js'"
   },
   "version": "0.1.0"
 }
