@@ -142,6 +142,9 @@ describe('Modal', function() {
     })
 
     it('Element', function(done) {
+      let scrollY = 0
+      window.scrollTo(0, 20000)
+
       modals[0].addEventListener('shown', ()=> {
         expect(modals[0].classList.contains('show')).toBeTruthy()
         expect(window.getComputedStyle(modals[0]).display).toBe('block')
@@ -149,7 +152,12 @@ describe('Modal', function() {
         done()
       }, {once: true})
 
-      triggers[2].dispatchEvent(events.click)
+      setTimeout(() => {
+        scrollY = window.scrollY
+
+        triggers[2].dispatchEvent(events.click)
+        expect(document.body.style.top).toBe((-scrollY) + 'px')
+      }, 1000)
     })
   })
 
@@ -200,6 +208,9 @@ describe('Modal', function() {
     })
 
     it('Element', function(done) {
+      window.scrollTo(0, 2000)
+      let scrollY = window.scrollY
+
       Modal.create(modals[0])
         .then(() => {
           let modal = Modal.instance(modals[0])
@@ -217,6 +228,7 @@ describe('Modal', function() {
             expect(document.body.classList.contains('modal-open')).toBeFalsy()
             expect(window.getComputedStyle(modals[0]).display).toBe('none')
             expect(window.location.hash).toBe('')
+            expect(window.scrollY).toEqual(scrollY)
 
             test.test()
           })

@@ -8,13 +8,27 @@ const Modal = (() => {
       this._config = this._getConfig(config)
       this._content = this.el.querySelector('.modal-content') || this.el
       this._loader = null
+      this._scroll = {}
       
       // Delegated functions
       this._hide = this.hide.bind(this)
     }
 
     show() {
-      document.body.classList.add('modal-open')
+      let body = document.body
+      this._scroll = {
+        top: window.scrollY,
+        left: window.scrollX
+      }
+
+      body.classList.add('modal-open')
+
+      /* Scroll lock */
+      body.style.position = 'fixed'
+      body.style.left = '0'
+      body.style.right = '0'
+      body.style.top = (-this._scroll.top) + 'px'
+      body.style.left = (-this._scroll.left) + 'px'
 
       let all = null
       let _show = document.createEvent('Event')
@@ -233,6 +247,8 @@ const Modal = (() => {
     }
 
     clear() {
+      let body = document.body
+
       Array.from(this.el.querySelectorAll('[data-dismiss="modal"]')).forEach(el => el.removeEventListener('click', this._hide))
 
       this._off('click', this.el)
@@ -245,7 +261,18 @@ const Modal = (() => {
       this.el.classList.remove('show')
       this.el.style.display = 'none'
 
-      document.body.classList.remove('modal-open')
+      body.classList.remove('modal-open')
+
+      /* Release scroll lock */
+      body.style.position = ''
+      body.style.left = ''
+      body.style.right = ''
+      body.style.top = ''
+
+      if (this._scroll.top !== undefined && this._scroll.left !== undefined)
+        window.scrollTo(this._scroll.left, this._scroll.top)
+
+      this._scroll = {}
 
       return this
     }
